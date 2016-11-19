@@ -29,7 +29,7 @@ app.get('/', (req, res) => res.json({ message: 'Welcome to bookstore' }));
 
 app.route('/book')
   .get(book.getBooks)
-  .post(book.postBooks);
+  .post(book.postBook);
 
 app.route('/book/:id')
   .get(book.getBook)
