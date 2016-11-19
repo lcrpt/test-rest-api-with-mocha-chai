@@ -1,0 +1,12 @@
+{
+  "name": "test-rest-api-mocha-chai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "SET NODE_ENV=dev && node server.js",
+    "test": "mocha --timeout 10000"
+  },
+  "author": "",
+  "license": "ISC"
+}
