@@ -12,10 +12,10 @@ const BookSchema = new Schema(
   { versionKey: false },
 );
 
-BookSchema.pre('save', next => {
+BookSchema.pre('save', (next) => {
   const now = new Date();
 
-  if (!this.createdAt) {
+  if (this && !this.createdAt) {
     this.createdAt = now;
   }
 
