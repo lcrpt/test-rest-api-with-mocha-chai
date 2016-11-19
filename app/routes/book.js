@@ -11,9 +11,11 @@ const getBooks = (req, res) => {
 
 const postBook = (req, res) => {
   new Book(req.body).save((err, book) => {
-    if (err) res.send(err);
-
-    res.json({ message: `Book successfully added, ${book}` });
+    if (err) {
+      res.send(err);
+    } else {
+      res.json({ message: 'Book successfully added!', book });
+    }
   });
 };
 
@@ -29,7 +31,7 @@ const deleteBook = (req, res) => {
   Book.remove({ _id: req.params.id }, (err, result) => {
     if (err) res.send(err);
 
-    res.json({ message: `Book successfully deleted, ${result}` });
+    res.json({ message: 'Book successfully deleted', result });
   });
 };
 
@@ -40,7 +42,7 @@ const updateBook = (req, res) => {
     Object.assign(book, req.body).save((err, book) => {
       if (err) res.send(err);
 
-      res.json({ message: `Book successfully updated, ${book}` });
+      res.json({ message: 'Book successfully updated', book });
     });
   });
 };
