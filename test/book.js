@@ -65,10 +65,11 @@ describe('Book', () => {
         res.should.have.status(200);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Book successfully added!');
-        res.body.book.should.have.property('title');
-        res.body.book.should.have.property('author');
-        res.body.book.should.have.property('year');
-        res.body.book.should.have.property('pages');
+        res.body.should.have.property('_id').eql(book.id);
+        res.body.should.have.property('title').eql(book.title);
+        res.body.should.have.property('author').eql(book.author);
+        res.body.should.have.property('year').eql(book.year);
+        res.body.should.have.property('pages').eql(book.pages);
         done();
       });
     });
@@ -90,11 +91,43 @@ describe('Book', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.should.be.a('object');
-          res.body.should.have.property('title');
-          res.body.should.have.property('author');
-          res.body.should.have.property('year');
-          res.body.should.have.property('pages');
           res.body.should.have.property('_id').eql(book.id);
+          res.body.should.have.property('title').eql(book.title);
+          res.body.should.have.property('author').eql(book.author);
+          res.body.should.have.property('year').eql(book.year);
+          res.body.should.have.property('pages').eql(book.pages);
+          done();
+        });
+      });
+    });
+  });
+
+  describe('/PUT/:id book', () => {
+    it('it should UPDATE a book by id', (done) => {
+      const book = new Book({
+        title: "The Chronicles of Narnia",
+        author: "C.S. Lewis",
+        year: 1948,
+        pages: 778,
+      });
+
+      book.save((err, book) => {
+        chai.request(server)
+        .put(`/book/${book.id}`)
+        .send({
+          title: "Narnia Chronicles",
+          author: "Lewis",
+          year: 2000,
+          pages: 900,
+        })
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Book successfully updated');
+          res.body.book.should.have.property('title').eql('Narnia Chronicles');
+          res.body.book.should.have.property('author').eql('Lewis');
+          res.body.book.should.have.property('year').eql(2000);
+          res.body.book.should.have.property('pages').eql(900);
           done();
         });
       });
