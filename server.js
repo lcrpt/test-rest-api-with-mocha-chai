@@ -33,7 +33,7 @@ app.route('/book')
 
 app.route('/book/:id')
   .get(book.getBook)
-  .post(book.postBook)
+  .delete(book.deleteBook)
   .put(book.updateBook)
 
 app.listen(port);

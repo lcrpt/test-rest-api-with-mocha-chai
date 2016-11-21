@@ -27,14 +27,6 @@ const getBook = (req, res) => {
   });
 };
 
-const deleteBook = (req, res) => {
-  Book.remove({ _id: req.params.id }, (err, result) => {
-    if (err) res.send(err);
-
-    res.json({ message: 'Book successfully deleted', result });
-  });
-};
-
 const updateBook = (req, res) => {
   Book.findById({ _id: req.params.id }, (err, book) => {
     if (err) res.send(err);
@@ -44,6 +36,12 @@ const updateBook = (req, res) => {
 
       res.json({ message: 'Book successfully updated', book });
     });
+  });
+};
+
+const deleteBook = (req, res) => {
+  Book.remove({ _id: req.params.id }, (err, result) => {
+    res.json({ message: 'Book successfully deleted', result });
   });
 };
 

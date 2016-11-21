@@ -65,11 +65,10 @@ describe('Book', () => {
         res.should.have.status(200);
         res.body.should.be.a('object');
         res.body.should.have.property('message').eql('Book successfully added!');
-        res.body.should.have.property('_id').eql(book.id);
-        res.body.should.have.property('title').eql(book.title);
-        res.body.should.have.property('author').eql(book.author);
-        res.body.should.have.property('year').eql(book.year);
-        res.body.should.have.property('pages').eql(book.pages);
+        res.body.book.should.have.property('title').eql(book.title);
+        res.body.book.should.have.property('author').eql(book.author);
+        res.body.book.should.have.property('year').eql(book.year);
+        res.body.book.should.have.property('pages').eql(book.pages);
         done();
       });
     });
@@ -133,22 +132,28 @@ describe('Book', () => {
       });
     });
   });
+
+  describe('/DELETE/:id book', () => {
+    it('it should DELETE a book by id', (done) => {
+      const book = new Book({
+        title: "The Chronicles of Narnia",
+        author: "C.S. Lewis",
+        year: 1948,
+        pages: 778,
+      });
+
+      book.save((err, book) => {
+        chai.request(server)
+        .delete(`/book/${book.id}`)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Book successfully deleted');
+          res.body.result.should.have.property('ok').eql(1);
+          res.body.result.should.have.property('n').eql(1);
+          done();
+        });
+      });
+    });
+  });
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
